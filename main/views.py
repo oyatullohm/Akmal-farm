@@ -102,7 +102,6 @@ def send_otp(request):
 
             otp = random.randint(1000, 9999)
             print(otp)
-            print(1111)
             cache.set(f"otp_{phone_number}", otp, timeout=300)           
             response = send_sms(phone_number, otp)
 

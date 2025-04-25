@@ -32,6 +32,7 @@ def cart_view(request):
     order = Order.objects.filter(user=request.user, is_completed=False).first()  
     return render(request, "cart.html", {"order": order})
 def Index(request):
+    
     product_xit = Product.objects.filter(category=1).all()
     product_sale = Product.objects.filter(category=2).all()
     category = Category.objects.first()
