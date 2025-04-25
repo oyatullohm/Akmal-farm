@@ -1,0 +1,1187 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<!-- slide start -->
+<div class="slider">
+    <div class="slides">
+        <img src="../static/assets/img2/o'quv markaz.jpg" alt="Image 1">
+        <img src="../static/assets/img2/labaratoriya.jpg" alt="Image 2">
+        <img src="../static/assets/img2/ayollar markazi.jpg" alt="Image 3">
+        <img src="../static/assets/img2/Akmal farm.jpg" alt="Image 4">
+    </div>
+    <button class="prev1" onclick="prevSlide1()">&#10094;</button>
+    <button class="next1" onclick="nextSlide1()">&#10095;</button>
+    <script>
+        let slideIndex = 0;
+
+        function showSlides() {
+            const slides = document.querySelectorAll('.slides img');
+
+            if (slideIndex >= slides.length) {
+                slideIndex = 0;
+            }
+
+            if (slideIndex < 0) {
+                slideIndex = slides.length - 1;
+            }
+
+            slides.forEach(slide => {
+                slide.style.display = "none";
+            });
+
+            slides[slideIndex].style.display = "block";
+        }
+
+        function nextSlide1() {
+            slideIndex++;
+            showSlides();
+        }
+
+        function prevSlide1() {
+            slideIndex--;
+            showSlides();
+        }
+
+        showSlides();
+
+    </script>
+</div><br>
+<style>
+    /* Slider konteyneri */
+    .slider {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        /* Rasmlarni markazga joylashtiradi */
+        align-items: center;
+    }
+
+    /* Slaydlardagi rasmlar */
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slides img {
+        margin-left: 50px;
+        width: 1200px;
+        height: 300px;
+        object-fit: cover;
+        /* Rasmni slayderga to'liq sig'diradi */
+        object-position: center;
+        /* Rasmni markazlashtiradi */
+        display: none;
+        /* Dastlab barchasi yashiringan */
+    }
+
+    /* Tugmalar */
+    .slider>button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 24px;
+        transition: 0.3s;
+        z-index: 10;
+        /* Tugmalar rasm ustida joylashadi */
+    }
+
+    .slider>button:hover {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Oldingi tugma */
+    .slider .prev1 {
+        left: 240px;
+    }
+
+    /* Keyingi tugma */
+    .slider .next1 {
+        right: 266px;
+    }
+
+    @media (max-width: 768px) {
+
+        /* iPad (landscape) va kichik ekranlar uchun */
+        .slides img {
+            width: 90%;
+            /* Rasmlarni kichraytiradi */
+            margin-left: 0;
+            /* Marginni olib tashlaydi */
+        }
+
+        .slider .prev1 {
+            left: 10px;
+            /* Tugmalarni o'ngda va chapda joylashtirish */
+        }
+
+        .slider .next1 {
+            right: 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .slides img {
+            width: 1300px;
+            height: 200px;
+            margin-left: 20px;
+            /* Marginni olib tashlaydi */
+        }
+
+        .slider .prev1 {
+            left: 25px;
+            font-size: 0.8rem;
+        }
+
+        .slider .next1 {
+            right: 25px;
+            font-size: 0.8rem;
+        }
+    }
+</style>
+<!-- slid end -->
+<!-- 1-rinchi card -->
+<div class="produtc_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="product_tab_button">
+                    <ul class="nav" role="tablist">
+                        <li>
+                            <h4> <a class="active" data-bs-toggle="tab" href="#Products" role="tab"
+                                    aria-controls="Products" aria-selected="true"
+                                    style="color: black;">{{category.name}}</a></h4>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <style>
+            .product_active {
+                flex: 0 0 calc(85% - 16px);
+                gap: 1px !important;
+            }
+
+            @media (max-width: 768px) {
+                .product_active {
+                    flex: 0 0 calc(50% - 8px) !important;
+                    /* 2ta ustunda joylashadi */
+                }
+            }
+
+            .product_active>.single_product {
+                width: 50px !important;
+                height: auto;
+            }
+        </style>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="Products" role="tabpanel">
+                <div class="row">
+                    <div class="product_active owl-carousel">
+                        {% for product in product_xit %}
+                        <div class="col-lg-3" style="height: auto;">
+                            <div class="single_product">
+                                <div class="product_thumb">
+                                    <a href="product-details.html" style="margin: 0px !important;"><img
+                                            src="{{product.image1.url}}" alt="" style="margin: 0px !important;"></a>
+                                    <div class="btn_quickview">
+                                        <!-- <a href="product-details.html" data-bs-toggle="modal" data-bs-target="#modal_box" -->
+                                        <!-- title="Quick View"><i class="ion-ios-eye"></i></a> -->
+                                    </div>
+                                </div>
+                                <div class="product_content">
+                                    <h3><a href="product-details.html">{{ product.name }}</a></h3>
+                                    {% if product.new_price > 0 %}
+                                    <div class="product_price">
+                                        <span class="current_price"
+                                            style="color: grey;font-size: 15px;"><s>{{product.price}}
+                                                so'm</s></span><br>
+                                        <span class="current_price">{{ product.new_price}} so'm</span>
+                                    </div>
+                                    {% else %}
+                                    <div class="product_price">
+                                        <br>
+                                        <span class="current_price">{{ product.price}} so'm</span>
+                                        <br>
+                                    </div>
+                                    {% endif %}
+
+                                    <div class="product_action">
+                                        <ul style="display: flex; justify-content: center;
+                                        align-items: center;">
+                                            {% if user.is_authenticated %}
+                                            <li class="product_cart"><a
+                                                    href="/add_to_cart/{{ product.id }}/">корзина</a></li>
+
+                                            {% else %}
+                                            <li class="product_cart" style="margin-right: 10px;"><a
+                                                    href="/auth/send-otp/">корзина</a></li>
+                                            {% endif %}
+                                            <li class="add_links"><a href="/toggle/{{ product.id }}/"
+                                                    title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                            </li>
+                                            <li class="add_links"><a href="/productdetail/{{ product.id }}/"
+                                                    title="Add to Wishlist"><i class="ion-ios-eye"></i></a></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 1-tugadi -->
+
+<!-- 2-inchi card -->
+<div class="produtc_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="product_tab_button">
+                    <ul class="nav" role="tablist">
+                        <li>
+                            <h4><a class="active" data-bs-toggle="tab" href="#Products" role="tab"
+                                    aria-controls="Products" aria-selected="true" style="color: black;">Акции/Сезонные
+                                    препараты</a></h4>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="Products" role="tabpanel">
+                <div class="row">
+                    <div class="product_active owl-carousel" style=" flex: 0 0 calc(85% - 16px); gap: 1px !important;">
+                        <div class="col-lg-3">
+                            <div class="single_product">
+                                <div class="product_thumb">
+                                    <a href="product-details.html"><img src="../static/assets/img2/100.jpg" alt=""></a>
+                                    <div class="btn_quickview">
+                                        <!-- <a href="product-details.html" data-bs-toggle="modal" data-bs-target="#modal_box" -->
+                                        <!-- title="Quick View"><i class="ion-ios-eye"></i></a> -->
+                                    </div>
+                                </div>
+                                <div class="product_content">
+                                    <div class="product_ratting">
+                                        <ul>
+                                            <li><a href="#"><i class="ion-star"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <h3><a href="product-details.html">нолгрип</a></h3>
+                                    <div class="product_price">
+                                        <span class="current_price" style="color: grey;font-size: 15px;"><s>4 200
+                                                so'm</s></span><br>
+                                        <span class="current_price">10 000 so'm</span>
+                                    </div>
+                                    <div class="product_action">
+                                        <ul>
+                                            <li class="product_cart"><a href="cart.html">корзина</a></li>
+                                            <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i
+                                                        class="ion-ios-heart-outline"></i></a></li>
+                                            <li class="add_links"><a href="#" title="Add to Compare"><i
+                                                        class="ion-loop"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="single_product">
+                                <div class="product_thumb">
+                                    <a href="product-details.html"><img src="../static/assets/img2/200.jpg" alt=""></a>
+                                    <div class="btn_quickview">
+                                        <!-- <a href="product-details.html" data-bs-toggle="modal" data-bs-target="#modal_box" -->
+                                        <!-- title="Quick View"><i class="ion-ios-eye"></i></a> -->
+                                    </div>
+                                </div>
+                                <div class="product_content">
+                                    <div class="product_ratting">
+                                        <ul>
+                                            <li><a href="#"><i class="ion-star"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <h3><a href="product-details.html">нолгрип</a></h3>
+                                    <div class="product_price">
+                                        <span class="current_price" style="color: grey;font-size: 15px;"><s>4 200
+                                                so'm</s></span><br>
+                                        <span class="current_price">10 000 so'm</span>
+                                    </div>
+                                    <div class="product_action">
+                                        <ul>
+                                            <li class="product_cart"><a href="cart.html">корзина</a></li>
+                                            <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i
+                                                        class="ion-ios-heart-outline"></i></a></li>
+                                            <li class="add_links"><a href="#" title="Add to Compare"><i
+                                                        class="ion-loop"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="single_product">
+                                <div class="product_thumb">
+                                    <a href="product-details.html"><img src="../static/assets/img2/300.jpg" alt=""></a>
+                                    <div class="btn_quickview">
+                                        <!-- <a href="product-details.html" data-bs-toggle="modal" data-bs-target="#modal_box" -->
+                                        <!-- title="Quick View"><i class="ion-ios-eye"></i></a> -->
+                                    </div>
+                                </div>
+                                <div class="product_content">
+                                    <div class="product_ratting">
+                                        <ul>
+                                            <li><a href="#"><i class="ion-star"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <h3><a href="product-details.html">аспирин</a></h3>
+                                    <div class="product_price">
+                                        <span class="current_price" style="color: grey;font-size: 15px;"><s>4 200
+                                                so'm</s></span><br>
+                                        <span class="current_price">15 000 so'm</span>
+                                    </div>
+                                    <div class="product_action">
+                                        <ul>
+                                            <li class="product_cart"><a href="cart.html">корзина</a></li>
+                                            <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i
+                                                        class="ion-ios-heart-outline"></i></a></li>
+                                            <li class="add_links"><a href="#" title="Add to Compare"><i
+                                                        class="ion-loop"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="single_product">
+                                <div class="product_thumb">
+                                    <a href="product-details.html"><img src="../static/assets/img2/400.jpg" alt=""></a>
+                                    <div class="btn_quickview">
+                                        <!-- <a href="product-details.html" data-bs-toggle="modal" data-bs-target="#modal_box" -->
+                                        <!-- title="Quick View"><i class="ion-ios-eye"></i></a> -->
+                                    </div>
+                                </div>
+                                <div class="product_content">
+                                    <div class="product_ratting">
+                                        <ul>
+                                            <li><a href="#"><i class="ion-star"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <h3><a href="product-details.html">кюпен</a></h3>
+                                    <div class="product_price">
+                                        <span class="current_price" style="color: grey;font-size: 15px;"><s>4 200
+                                                so'm</s></span><br>
+                                        <span class="current_price">16 200 so'm</span>
+                                    </div>
+                                    <div class="product_action">
+                                        <ul>
+                                            <li class="product_cart"><a href="cart.html">корзина</a></li>
+                                            <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i
+                                                        class="ion-ios-heart-outline"></i></a></li>
+                                            <li class="add_links"><a href="#" title="Add to Compare"><i
+                                                        class="ion-loop"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 2-tugadi -->
+
+<!--bizning hamkorlar rasmi boshlandi -->
+<div class="single_product_wrapper product_slider">
+    <div class="container">
+        <div class="row">
+            <h4 style="color: black;">Популярные бренды (маркетинг)</h4>
+            <div class="product_gallery_active owl-carousel" style="margin: 0px !important;">
+                <div class="col-lg-3">
+                    <div class="single_product_gallery">
+                        <img src="../static/assets/img3/80.png" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="single_product_gallery">
+                        <img src="../static/assets/img3/cs.png" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="single_product_gallery">
+                        <img src="../static/assets/img3/nutrica.png" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="single_product_gallery">
+                        <img src="../static/assets/img3/omron.png" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="single_product_gallery">
+                        <img src="../static/assets/img3/pg.png" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-3" style="width: 50px !important;">
+                    <div class="single_product_gallery">
+                        <img src="../static/assets/img3/logo02-removebg-preview.png" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="single_product_gallery">
+                        <img src="../static/assets/img3/stada.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- bizning hamkorlar rasmi tugadi -->
+
+
+<!-- haqimizda bohshlandi -->
+<div class="blog_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="blog_header_title">
+                    <h4 style="color: black;">Новости и статьи</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="blog_active owl-carousel" style=" flex: 0 0 calc(80% - 16px); padding: 0px !important;">
+              
+                <div class="col-lg-4">
+                    <div class="single_blog">
+                        <div class="blog_thumb">
+                            <a class="open-info-btn" onclick="showTextModal1()"><img src="../static/assets/img3/01.jpg"
+                                    alt="Kutib turing"></a>
+                        </div>
+
+                        <div class="blog_content"><br>
+                            <h5>Что делать при аллергии?</h5>
+                            <a href="#">24.03.2025</a>
+                            <p>Причины, симптомы и эффективные способы лечения.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="single_blog">
+                        <div class="blog_thumb">
+                            <a class="open-info-btn" onclick="showTextModal2()"><img
+                                    src="../static/assets/img3/02.jpg"></a>
+                        </div>
+                        <div class="blog_content"><br>
+                            <h6>Как укрепить иммунитет: простые шаги к здоровью</h6>
+                            <a>25.022025</a>
+                            <p> Иммунная система – это главный защитник организма от вирусов и инфекций.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="single_blog">
+                        <div class="blog_thumb">
+                            <a class="open-info-btn" onclick="showTextModal3()"><img src="../static/assets/img3/03.jpg"
+                                    alt=""></a>
+                        </div>
+                        <div class="blog_content"><br>
+                            <h5>Как быстро восстановить организм после болезни.</h5>
+                            <a href="#">23.02.2025</a>
+                            <p>После болезни организм ослаблен и нуждается в правильном восстановлении.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="single_blog">
+                        <div class="blog_thumb">
+                            <a class="open-info-btn" onclick="showTextModal4()"><img src="../static/assets/img3/04.jpg"
+                                    alt=""></a>
+                        </div>
+                        <div class="blog_content"><br>
+                            <h5>Идеальная кожа: секреты ухода и выбор средств</h5>
+                            <a href="#">22.02.2025</a>
+                            <p>Здоровая, сияющая кожа — мечта каждого. Но ежедневные стрессы.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<!-- info start -->
+<style>
+    .text-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(3px);
+    }
+
+    .text-modal-content {
+        background: #fff;
+        padding: 30px 60px;
+        width: 70%;
+        max-width: 850px;
+        margin: 5% auto;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        position: relative;
+        animation: modalFadeIn 0.5s ease forwards;
+    }
+
+    .text-modal-content p {
+        font-size: 1rem;
+        color: #333;
+        text-align: justify;
+        line-height: 1.6;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        font-size: 28px;
+        color: #333;
+        cursor: pointer;
+    }
+
+    @keyframes modalFadeIn {
+        0% {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Responsive design */
+    @media screen and (max-width: 768px) {
+        .text-modal-content {
+            width: 90%;
+            max-width: 100%;
+            padding: 20px 40px;
+            /* Adjust padding for smaller screens */
+        }
+
+        .text-modal-content p {
+            font-size: 0.9rem;
+            /* Adjust font size for readability */
+        }
+
+        .close-btn {
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            /* Smaller close button */
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .text-modal-content {
+            width: 90%;
+            max-width: 100%;
+            padding: 15px 25px;
+        }
+
+        .text-modal-content p {
+            font-size: 0.7rem;
+            /* Further reduce font size */
+        }
+
+        .close-btn {
+            top: 5px;
+            right: 15px;
+            font-size: 20px;
+            /* Even smaller close button */
+        }
+    }
+</style>
+
+<script>
+    function showTextModal1() {
+        document.getElementById("textModal1").style.display = "block";
+    }
+
+    function hideTextModal1() {
+        document.getElementById("textModal1").style.display = "none";
+    }
+
+    function showTextModal2() {
+        document.getElementById("textModal2").style.display = "block";
+    }
+
+    function hideTextModal2() {
+        document.getElementById("textModal2").style.display = "none";
+    }
+
+    function showTextModal3() {
+        document.getElementById("textModal3").style.display = "block";
+    }
+
+    function hideTextModal3() {
+        document.getElementById("textModal3").style.display = "none";
+    }
+
+    function showTextModal4() {
+        document.getElementById("textModal4").style.display = "block";
+    }
+
+    function hideTextModal4() {
+        document.getElementById("textModal4").style.display = "none";
+    }
+
+    // 🟡 Modal tashqarisiga bosilganda hamma modalni yopish
+    window.onclick = function (event) {
+        let modals = ["textModal1", "textModal2", "textModal3", "textModal4"];
+        modals.forEach(function (modalId) {
+            let modal = document.getElementById(modalId);
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    }
+</script>
+
+<div id="textModal1" class="text-modal">
+    <div class="text-modal-content">
+        <span class="close-btn" onclick="hideTextModal1()">&times;</span>
+        <p>Аллергия – это реакция иммунной системы на определённые вещества, которые организм воспринимает как угрозу.
+            Она может проявляться в любое время года и доставлять немало дискомфорта. Разберёмся, как избежать
+            неприятных симптомов и защитить себя.
+
+            Основные причины аллергии
+
+            Аллергены могут быть разными:
+
+            ▫️Пыльца растений – вызывает сезонный аллергический ринит (сенную лихорадку).
+
+            ▫️Пыль и плесень – содержат микроскопические клещи и грибки, раздражающие дыхательные пути.
+
+            ▫️Шерсть животных – особые белки в коже и слюне питомцев могут провоцировать реакцию.
+
+            ▫️Продукты питания – орехи, молочные продукты, морепродукты часто вызывают аллергию.
+
+            ▫️Лекарства – некоторые препараты, особенно антибиотики, могут вызывать аллергическую реакцию.
+
+            Симптомы аллергии
+
+            Проявления аллергии могут быть разными:
+
+            ▫️Чихание, заложенность носа, насморк.
+
+            ▫️Слезотечение, покраснение глаз.
+
+            ▫️Зуд, высыпания на коже.
+
+            ▫️Одышка, кашель.
+
+            ▫️В редких случаях – анафилаксия (тяжелая реакция, требующая неотложной помощи).
+
+            Как защитить себя от аллергии?
+
+            ▫️Избегайте контакта с аллергенами: регулярно делайте влажную уборку, используйте очистители воздуха,
+            исключите опасные продукты.
+
+            ▫️Принимайте антигистаминные препараты: они помогают снизить симптомы и улучшить самочувствие.
+
+            ▫️Используйте гипоаллергенную косметику: она снижает риск раздражения кожи.
+
+            ▫️Обратитесь к врачу: специалист поможет выявить причины аллергии и назначит правильное лечение.
+
+            Будьте готовы к сезону аллергии!
+
+            В нашей интернет-аптеке вы найдете антигистаминные препараты, назальные спреи, глазные капли и другие
+            средства для борьбы с аллергией. Не ждите ухудшения самочувствия – позаботьтесь о своем здоровье заранее!
+
+            Закажите нужные лекарства прямо сейчас и забудьте о дискомфорте!</p>
+    </div>
+</div>
+<div id="textModal2" class="text-modal">
+    <div class="text-modal-content">
+        <span class="close-btn" onclick="hideTextModal2()">&times;</span>
+        <p>Основные факторы, влияющие на иммунитет
+
+            Состояние иммунной системы зависит от множества факторов, среди которых:
+
+            ▫️Питание – нехватка витаминов и микроэлементов снижает защитные функции организма.
+
+            ▫️Физическая активность – регулярные упражнения помогают улучшить кровообращение и ускорить обмен веществ.
+
+            ▫️Сон и отдых – недостаток сна негативно влияет на выработку иммунных клеток.
+
+            ▫️Закаливание - контрастный душ или обливания холодной водой помогают адаптировать организм к перепадам
+            температуры
+
+            ▫️Стресс – повышенный уровень кортизола ослабляет защитные силы организма.
+
+            Как повысить иммунитет?
+
+            ▫️Чтобы укрепить иммунную систему, следуйте простым, но эффективным рекомендациям:
+
+            ▫️Употребляйте больше витаминов – особенно важны витамин C (цитрусовые, киви, болгарский перец), витамин D
+            (рыба, яйца) и цинк (орехи, бобовые).
+
+            ▫️Пейте больше воды – достаточное количество жидкости помогает организму выводить токсины.
+
+            ▫️Занимайтесь спортом – прогулки на свежем воздухе, йога или пробежки укрепляют организм.
+
+            ▫️Высыпайтесь – 7–8 часов полноценного сна поддерживают нормальное функционирование иммунной системы.
+
+            ▫️Избегайте стрессов – найдите время для отдыха, медитации или занятий любимыми хобби.
+
+            Где найти всё необходимое для поддержания иммунитета?
+
+            В нашей интернет-аптеке вы найдете широкий выбор витаминов, минералов и иммуномодуляторов. Закажите нужные
+            средства прямо сейчас и позаботьтесь о своем здоровье заранее!
+
+            Переходите в каталог и выберите лучшие продукты для поддержания иммунитета!</p>
+    </div>
+</div>
+<div id="textModal3" class="text-modal">
+    <div class="text-modal-content">
+        <span class="close-btn" onclick="hideTextModal3()">&times;</span>
+        <p>Что происходит с организмом после болезни?
+
+            Ослабленный иммунитет
+            Потеря сил и быстрая утомляемость
+            Дисбаланс микрофлоры кишечника (особенно после приёма антибиотиков)
+            Дефицит витаминов и минералов
+            Возможные остаточные симптомы: слабость, головокружение, сухость кожи
+
+            Как восстановить организм?
+
+            ▫️Сбалансированное питание
+
+            Включите в рацион белки, полезные жиры и медленные углеводы.
+
+            Употребляйте больше овощей, зелени, орехов, кисломолочных продуктов.
+
+            Пейте больше жидкости: воду, травяные чаи, морсы для выведения токсинов.
+
+            ▫️Витамины и микроэлементы
+
+            Витамин C — ускоряет восстановление и поддерживает иммунитет.
+
+            Витамин D — помогает в борьбе с усталостью и укрепляет организм.
+
+            Цинк и магний — улучшают самочувствие и поддерживают работу нервной системы.
+
+            Пробиотики — восстанавливают микрофлору кишечника после приёма лекарств.
+
+            ▫️Физическая активность и свежий воздух
+
+            Лёгкие прогулки на свежем воздухе ускоряют обмен веществ и насыщают кровь кислородом.
+
+            Йога и растяжка помогают снять напряжение и восстановить тонус мышц.
+
+            ▫️Режим сна и отдыха
+
+            Высыпайтесь: 7–9 часов сна помогут организму быстрее восстановиться.
+
+            Избегайте перегрузок и стресса, восстанавливайтесь постепенно.
+
+            ▫️Дополнительная поддержка организма
+
+            Чаи с ромашкой, имбирём и мёдом помогают укрепить иммунитет.
+
+            Лёгкие дыхательные упражнения способствуют улучшению работы лёгких.
+
+            Где найти всё необходимое для восстановления?
+
+            В нашей интернет-аптеке вы найдёте витаминные комплексы, пробиотики и натуральные средства для поддержки
+            организма. Закажите необходимое и восстанавливайтесь быстрее!
+
+            Позаботьтесь о здоровье — оформите заказ прямо сейчас!</p>
+    </div>
+</div>
+<div id="textModal4" class="text-modal">
+    <div class="text-modal-content">
+        <span class="close-btn" onclick="hideTextModal4()">&times;</span>
+        <p>Основные этапы ухода за кожей
+
+            Очищение — удаляет загрязнения и излишки себума, подготавливает кожу к последующему уходу. Выбирайте мягкие
+            гели или пенки, соответствующие вашему типу кожи.
+
+            Тонизирование — восстанавливает pH-баланс, сужает поры и подготавливает кожу к увлажнению.
+
+            Увлажнение — ключевой этап, который поддерживает защитный барьер кожи и предотвращает её пересушивание.
+
+            Дополнительный уход — маски, сыворотки и скрабы помогают решить специфические проблемы: пигментацию,
+            воспаления, сухость или первые морщины.
+
+            Защита — солнцезащитные кремы предотвращают фотостарение и защищают кожу от вредного воздействия УФ-лучей.
+
+            Как выбрать косметику для ухода?
+
+            Выбор средств зависит от типа кожи:
+
+            Сухая кожа — требует питательных кремов и мягких очищающих средств.
+
+            Жирная кожа — нуждается в лёгких текстурах и средствах с матирующим эффектом.
+
+            Чувствительная кожа — предпочитает гипоаллергенную косметику без агрессивных компонентов.
+
+            Комбинированная кожа — требует баланса увлажнения и контроля себума.
+
+            Полезные советы по уходу
+
+            ✔️ Используйте средства с натуральными экстрактами и витаминами.
+            ✔️ Не забывайте пить достаточно воды для увлажнения кожи изнутри.
+            ✔️ Регулярно меняйте наволочки и избегайте прикосновений к лицу грязными руками.
+            ✔️ Не злоупотребляйте жёсткими скрабами, чтобы не травмировать кожу.
+            ✔️ Подбирайте косметику с учётом сезона: зимой — питательные кремы, летом — лёгкие увлажняющие гели.
+
+            Найдите идеальные средства в нашей интернет-аптеке
+
+            В нашем каталоге вы найдёте всё для комплексного ухода за кожей: от деликатных очищающих пенок до мощных
+            антивозрастных сывороток. Выберите подходящие средства прямо сейчас и наслаждайтесь здоровой, ухоженной
+            кожей каждый день!
+
+            Закажите эффективный уход для кожи прямо сейчас!</p>
+    </div>
+</div>
+<!-- haqimizda tugatildi -->
+<!-- matinlar boshlandi -->
+
+<div class="matin">
+    <h4 class="a2">Интернет-аптека "Akmal Farm Medical"</h4><br>
+    <p>Добро пожаловать в интернет-аптеку "Akmal Farm Medical"! <br> Здесь и во всех наших филиалах вы найдёте всё
+        необходимое для заботы о своём здоровье. Мы используем современные технологии, <br> а также всегда рады
+        покупателям
+        Вас ждёт быстрое обслуживание, широкий ассортимент, комфорт и удобство. <br> И при этом главная
+        отличительная
+        черта
+        наших аптек в том, что сэкономить на лекарствах можно, нужно только прийти и убедиться!
+
+        Наша цель – предоставить <br> каждому покупателю возможность приобрести необходимые медикаменты по самым
+        выгодным
+        ценам, даже по сравнению с другими аптеками.
+        <br>
+        ⚪️ Оптимизированная закупочная политика – мы сотрудничаем с крупнейшими поставщиками и закупаем продукцию в
+        больших объёмах.
+        <br>
+        ⚪️ Прямые поставки от производителей – сокращение цепочки посредников позволяет нам предлагать лучшие цены.
+        <br>
+        ⚪️ Гарантия качества – все лекарства сертифицированы и проходят строгую проверку.
+        <br>
+        ⚪️ Высокий товарооборот – благодаря активным продажам у нас нет препаратов с истёкшим сроком годности.
+        <br>
+        Как оформить заказ?<br>
+        1. Найдите нужный препарат на сайте. <br>
+        2. Добавьте его в корзину и перейдите к оформлению заказа <br>
+        3. Укажите контактные данные и адрес доставки. <br>
+        4. Произведите оплату <br>
+        5. Ожидайте доставку
+        <br>
+
+        Наши специалисты всегда готовы помочь! Для консультаций звоните по телефону: +998 (78) 298-00-88 или по
+        короткому номеру 1080.
+        <br>
+        Мы ценим доверие наших клиентов и стремимся сделать процесс покупки удобным и безопасным. Спасибо, что
+        выбираете
+        интернет-аптеку "Akmal Farm Medical"!
+
+    </p>
+</div>
+<style>
+    .matin {
+        margin-left: 190px;
+        margin-bottom: 20px;
+    }
+
+    .a2 {
+        color: black;
+        font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+        .matin {
+            margin-left: 0;
+            padding: 30px;
+            margin: 20px;
+            margin-bottom: 20px !important;
+            border-radius: 10px;
+            background-color: #e4e4e4;
+            flex-direction: column;
+        }
+
+        .a2 {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .a2 {
+            font-size: 14px;
+        }
+    }
+</style>
+<!-- matinlar tugatildi -->
+
+<!-- reklama- boshland -->
+
+<div class="container22">
+    <div class="box1">
+        <span>ГАРАНТИЯ КАЧЕСТВА</span>
+        <button onclick="showTextModal5()">Подробно</button>
+        <img src="../static/assets/img/Гарантия качества.jpeg" alt="Image 1">
+    </div>
+    <div class="box1">
+        <span>УСЛОВИЯ ДОСТАВКИ</span>
+        <button onclick="showTextModal6()">Подробно</button>
+        <img src="../static/assets/img/Условия доставки.jpeg" alt="Image 2">
+    </div>
+</div>
+
+<script>
+    function showTextModal5() {
+        document.getElementById("textModal5").style.display = "block";
+    }
+
+    function hideTextModal5() {
+        document.getElementById("textModal5").style.display = "none";
+    }
+    function showTextModal6() {
+        document.getElementById("textModal6").style.display = "block";
+    }
+
+    function hideTextModal6() {
+        document.getElementById("textModal6").style.display = "none";
+    }
+</script>
+<div id="textModal5" class="text-modal">
+    <div class="text-modal-content">
+        <span class="close-btn" onclick="hideTextModal5()">&times;</span>
+        <p>Аптечная сеть «Akmal Farm Medical» сотрудничает напрямую с ведущими производителями и дистрибьюторами товаров
+            для красоты и здоровья. Благодаря этому мы гарантируем 100% качество всех наименований в нашем ассортименте,
+            включая лекарственные препараты, косметику, биологически активные добавки (БАД) и медицинские товары.</p>
+    </div>
+</div>
+<div id="textModal6" class="text-modal">
+    <div class="text-modal-content">
+        <span class="close-btn" onclick="hideTextModal6()">&times;</span>
+        <p><span style="color: red;">Внимание! Адресная доставка недоступна для рецептурных препаратов, наркотических
+                средств, психотропных,
+                сильнодействующих и ядовитых веществ, а также для препаратов, требующих особых условий хранения и
+                транспортировки. </span> <br>
+            <b>Доставка курьером</b>
+            <br>
+            Курьерская доставка осуществляется только для безрецептурных препаратов.
+            Стоимость доставки рассчитывается по тарифам Yandex Delivery.
+            Оплата возможна наличными курьеру при получении заказа. <br>
+            <b>Способы оплаты</b> <br>
+            Оплата наличными доступна только при покупке лекарств непосредственно в аптеке. <br>
+
+            При оформлении доставки оплата возможна только картой. Вы можете оплатить заказ через банковские приложения
+            как при оформлении доставки, так и непосредственно в аптеке при получении товара.
+            <br>
+            <b>Самовывоз из аптеки</b>
+            <br>
+            Доставка рецептурных препаратов в Республике Узбекистан запрещена. Их можно получить только при
+            самостоятельном визите в аптеку.
+            <br>
+            Оформить самовывоз можно на сайте, оплата производится наличными при получении или картой.
+            Дополнительные комиссии за самовывоз не взимаются.
+        </p>
+    </div>
+</div>
+
+<style>
+    /* Default styles */
+    .box1>span {
+        position: absolute;
+        color: white;
+        padding-left: 20px;
+        padding-top: 10px;
+        font-size: 2rem;
+    }
+
+    .box1 {
+        width: 550px;
+    }
+
+    .box1>p {
+        position: absolute;
+        color: white;
+        padding-left: 20px;
+        padding-top: 70px;
+        font-size: 17px;
+    }
+
+    .box1>button {
+        margin-top: 120px;
+        margin-left: 20px;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 30px;
+        background-color: #0960e2;
+        color: white;
+        position: absolute;
+    }
+
+    .container22 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+    }
+
+    .box1 img {
+        width: 1000px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 1200px) {
+        .box1 {
+            width: 450px;
+        }
+
+        .box1>h2 {
+            font-size: 1.8rem;
+        }
+
+        .box1>p {
+            font-size: 16px;
+            padding-top: 60px;
+        }
+
+        .box1>button {
+            margin-top: 100px;
+        }
+
+        .box1 img {
+            width: 900px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .box1 {
+            width: 400px;
+        }
+
+        .box1>span {
+            font-size: 1.6rem;
+        }
+
+        .box1>p {
+            font-size: 15px;
+            padding-top: 50px;
+        }
+
+        .box1>button {
+            margin-top: 80px;
+        }
+
+        .box1 img {
+            width: 800px;
+        }
+    }
+
+    @media (max-width: 768px) {
+    
+        .box1 {
+            width: 108%;
+        }
+
+        .box1>span {
+            font-size: 1.4rem;
+        }
+
+        .box1>p {
+            font-size: 14px;
+            padding-top: 40px;
+        }
+
+        .box1>button {
+            margin-top: 60px;
+        }
+
+        .box1 img {
+            width: 100%;
+        }
+
+        .container22 {
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container22 {
+            margin-left: 40px;
+        }
+        .box1>span {
+            font-size: 1.2rem;
+        }
+
+        .box1>p {
+            font-size: 13px;
+            padding-top: 30px;
+        }
+
+        .box1>button {
+            margin-top: 85px;
+            width: 150px;
+            height: auto;
+        }
+
+        .box1 img {
+            width: 100%;
+        }
+
+        .container22 {
+            display: flex !important;
+            justify-content: center;
+            
+        }
+    }
+</style>
+<!-- reklama tugatilid -->
+{% endblock content %}
