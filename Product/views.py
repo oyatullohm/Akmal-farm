@@ -78,13 +78,16 @@ def DeleteProduct(request, product_id):
 
 
 def search_products(request):
-    query = krill_lotin_traslate(request.GET.get('q', ''))  
+    query = krill_lotin_traslate(request.GET.get('q', '')).lower()  
     category_id = request.GET.get('category', '')
+    print(query)
+    print(query)
+    print(query)
 
     products = Product.objects.all()
 
     if query:
-        normalized_query = unidecode(query.lower()) 
+        normalized_query = unidecode(query) 
         products = products.filter(name__icontains=query) | products.filter(name__icontains=normalized_query)
 
     if category_id:
