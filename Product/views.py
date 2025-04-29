@@ -1,15 +1,13 @@
-from django.contrib import messages
-
-
-from django.shortcuts import render
-from django.views.generic import DetailView
-from .forms import  *
-from .models import *
-# Create your views here.
-
-
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from .lotin_krill import krill_lotin_traslate
+from django.views.generic import DetailView
+from django.contrib import messages
+from django.shortcuts import render
+from unidecode import unidecode
+from .models import *
+from .forms import  *
+
 
 @login_required(login_url='/auth/send-otp/')
 def add_to_cart(request, product_id):
@@ -26,13 +24,14 @@ def add_to_cart(request, product_id):
         order_item.save()
     messages.success(request, " mahsulot Savatchaga qo'shildi ")
 
-    return redirect(request.META.get("HTTP_REFERER", "home"))  
+    return redirect(request.META.get("HTTP_REFERER", "home"))
+
 @login_required(login_url='/auth/send-otp/')
 def cart_view(request):
     order = Order.objects.filter(user=request.user, is_completed=False).first()  
     return render(request, "cart.html", {"order": order})
-def Index(request):
     
+def Index(request):
     product_xit = Product.objects.filter(category=1).all()
     product_sale = Product.objects.filter(category=2).all()
     category = Category.objects.first()
@@ -67,7 +66,7 @@ def decrease_quantity(request, item_id):
         order_item.delete()  
     return redirect("cart")
 
-login_required(login_url='/auth/send-otp/')
+@login_required(login_url='/auth/send-otp/')
 def DeleteProduct(request, product_id):
     """ Savatdan bitta mahsulot turini butunlay o‘chirish """
     order = Order.objects.filter(user=request.user, is_completed=False).first()
@@ -78,11 +77,8 @@ def DeleteProduct(request, product_id):
     return redirect("cart")  
 
 
-
-from unidecode import unidecode
-
 def search_products(request):
-    query = request.GET.get('q', '')  
+    query = krill_lotin_traslate(request.GET.get('q', ''))  
     category_id = request.GET.get('category', '')
 
     products = Product.objects.all()
@@ -109,6 +105,7 @@ class ProductDetailView(DetailView):
     template_name = 'product-details.html'
     context_object_name = 'product'
 
+
 def checkout_view(request):
     if request.method == "POST":
         form = CheckoutForm(request.POST)
@@ -128,15 +125,10 @@ def checkout_view(request):
     return render(request, 'checkout.html', {'form': form})
 
 
-
 def Myaccount(request):
     return render(request,'my-account.html')
 
 
-
-from django.shortcuts import render, get_object_or_404, redirect
-
-from django.contrib import messages
 
 @login_required
 def toggle_wishlist(request, product_id):
@@ -151,8 +143,6 @@ def toggle_wishlist(request, product_id):
         messages.success(request, "Mahsulot wishlistga qo‘shildi!")
 
     return redirect(request.META.get('HTTP_REFERER', 'wishlist')) 
-
-
 
 
 @login_required(login_url='/auth/send-otp/')
@@ -182,13 +172,6 @@ def Contact(request):
     return render(request,'contact.html',context)
 
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import Order, OrderItem
-from .forms import CheckoutForm
-
-
-
 def checkout_view(request):
     cart_items = request.user.cart.items.all()  
 
@@ -208,7 +191,6 @@ def checkout_view(request):
             for item in cart_items:
                 OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity)
 
-           
             request.user.cart.items.all().delete()
             
             messages.success(request, "Buyurtmangiz rasmiylashtirildi!")
