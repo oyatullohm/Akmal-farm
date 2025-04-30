@@ -1,7 +1,8 @@
-from django.db import models
-from main.models import *
 from django.contrib.auth import get_user_model
 from django.utils.timezone import now
+from main.models import CustomUser
+from django.db import models
+from main.models import *
 
 User = get_user_model()
 # Create your models here.
@@ -13,8 +14,9 @@ class Category(models.Model):
         return self.name
 
 class Product(models.Model):
+    uid = models.BigIntegerField(db_index=True)
     category = models.ManyToManyField(Category, related_name="products")
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, db_index=True)
     new_price = models.FloatField(null=True, blank=True)
     price = models.FloatField()
     rate = models.FloatField(null=True, blank=True)
@@ -90,8 +92,6 @@ class OrderItem(models.Model):
             return self.product.price * self.quantity
 
 
-
-from main.models import CustomUser
 class Wishlist(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

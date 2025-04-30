@@ -7,7 +7,9 @@ from django.shortcuts import render
 from unidecode import unidecode
 from .models import *
 from .forms import  *
-
+import requests
+import redis
+import json
 
 @login_required(login_url='/auth/send-otp/')
 def add_to_cart(request, product_id):
@@ -32,18 +34,57 @@ def cart_view(request):
     return render(request, "cart.html", {"order": order})
     
 def Index(request):
-    product_xit = Product.objects.filter(category=1).all()
-    product_sale = Product.objects.filter(category=2).all()
-    category = Category.objects.first()
-    category2 = Category.objects.last()
+    from requests.auth import HTTPBasicAuth
+    import time
+    url = "http://93.170.11.10:8088/RM_OPT/hs/online/stock"
+    username = "Online"
+    password = "cJXGLytPHb3nDNZf5gRh7jzwa"
+    
+
+    r = redis.Redis(host='localhost', port=6379, db=0)
+    # # start_time = time.time()
+   
+    # # end_time = time.time()
+    # # elapsed_time = end_time - start_time  
+    # # print(f"Ma'lumot {elapsed_time:.2f} sekundda keldi")
+
+    
+    cached_data = r.get('data')
+
+    if cached_data:
+
+        data = json.loads(cached_data)
+    else:
+        response = requests.post(url, auth=HTTPBasicAuth(username, password), stream=True, json={})
+    
+        if response.status_code == 200:
+            data = response.json().get('array', [])[:10]
+            r.setex('data', 3600, json.dumps(data))
+        else:
+            data = []
+    
+    
+    uid_list = [item["UID"] for item in data]
+    products = Product.objects.filter(uid__in=uid_list)
+
+    result = []
+    for item in data:
+        p = products.filter(uid=item["UID"])
+        if p.exists():
+            result.append({
+                "id":p[0].id,
+                'name': item['Name'],
+                'price': item["Price"],
+                "image1": p[0].image1.url if p[0].image1 else None
+            })
+
     context = {
-        'product_xit': product_xit,
-        'category': category,
-        'category2': category2,
+
+        
+        "data":result
 
     }
-    return render(request,'index.html',context)
-
+    return render(request,'index.html', context)
 
 @login_required(login_url='/auth/send-otp/')
 def increase_quantity(request, item_id):
