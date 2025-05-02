@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profilni to‘ldirish</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <div class="login form">
+      <header>Profilni To‘ldiring</header>
+      <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" class="button" value="Saqlash">
+      </form>
+    </div>
+  </div>
+</body>
+</html>

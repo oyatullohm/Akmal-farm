@@ -1,0 +1,91 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    color: #495057;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #9093a7;
+}
+
+
+/* .hammasi va .container */
+.hammasi {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background:  #387dff;
+    color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    max-width: 420px;
+}
+
+
+/* H1 uslublari */
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Paragraf uslublari */
+p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+/* Input uslublari */
+#sms-code {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+    transition: border-color 0.3s ease;
+}
+
+#sms-code:focus {
+    outline: none;
+    border: 2px solid #0a51d4;
+}
+
+/* Button uslublari */
+button {
+    width: 70%;
+    padding: 10px 20px;
+    background-color: rgb(255, 63, 63);
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+/* Link uslublari */
+a {
+    text-decoration: none;
+    color: #f8f9fa;
+    font-size: 16px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
