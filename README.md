@@ -8,4 +8,5 @@ requirments.txt  o'rnatamiz
 
 data.py fileda   objectlar bor  shundan korib admin paneldan  product create qilamiz uid va name foto  bir biriga mos Bo'lishiga etibor berin 
 
-admin panel http://127.0.0.1:8000/admin   login 1 password 1 
+
+
