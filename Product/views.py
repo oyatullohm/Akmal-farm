@@ -1,15 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .lotin_krill import krill_lotin_traslate
 from django.views.generic import DetailView
 from django.contrib import messages
 from django.shortcuts import render
 from unidecode import unidecode
 from .models import *
 from .forms import  *
-import requests
 import redis
 import json
+
 
 @login_required(login_url='/auth/send-otp/')
 def add_to_cart(request, product_id):
@@ -17,8 +16,6 @@ def add_to_cart(request, product_id):
     print(request.user)
    
     order, created = Order.objects.get_or_create(user=request.user, is_completed=False)
-
-    
     order_item, created = OrderItem.objects.get_or_create(order=order, product=product)
 
     if not created:
@@ -34,57 +31,34 @@ def cart_view(request):
     return render(request, "cart.html", {"order": order})
     
 def Index(request):
-    from requests.auth import HTTPBasicAuth
-    import time
-    url = "http://93.170.11.10:8088/RM_OPT/hs/online/stock"
-    username = "Online"
-    password = "cJXGLytPHb3nDNZf5gRh7jzwa"
-    
 
+    # start_time = time.time()
+#    */5 * * * * cd /path/to/your/project && source venv/bin/activate && celery -A Admin beat --loglevel=info
+
+    # end_time = time.time()
+    # elapsed_time = end_time - start_time  
+    # print(f"Ma'lumot {elapsed_time:.2f} sekundda keldi")
     r = redis.Redis(host='localhost', port=6379, db=0)
-    # # start_time = time.time()
-   
-    # # end_time = time.time()
-    # # elapsed_time = end_time - start_time  
-    # # print(f"Ma'lumot {elapsed_time:.2f} sekundda keldi")
+    result = r.get('final_result') 
+    if result:
+        result = json.loads(result.decode('utf-8'))
+        page = int(request.GET.get('page', 1))
+        page_size = 100
 
-    
-    cached_data = r.get('data')
-
-    if cached_data:
-
-        data = json.loads(cached_data)
-    else:
-        response = requests.post(url, auth=HTTPBasicAuth(username, password), stream=True, json={})
-    
-        if response.status_code == 200:
-            data = response.json().get('array', [])[:10]
-            r.setex('data', 3600, json.dumps(data))
-        else:
-            data = []
-    
-    
-    uid_list = [item["UID"] for item in data]
-    products = Product.objects.filter(uid__in=uid_list)
-
-    result = []
-    for item in data:
-        p = products.filter(uid=item["UID"])
-        if p.exists():
-            result.append({
-                "id":p[0].id,
-                'name': item['Name'],
-                'price': item["Price"],
-                "image1": p[0].image1.url if p[0].image1 else None
-            })
-
-    context = {
-
+        start = (page - 1) * page_size
+        end = start + page_size
+        result = result[start:end] 
         
+    category = request.GET.get('category')
+    if category:
+        result = [item for item in result if item.get('class') == category]
+        
+    context = {
         "data":result
-
     }
     return render(request,'index.html', context)
+
+
 
 @login_required(login_url='/auth/send-otp/')
 def increase_quantity(request, item_id):
@@ -119,28 +93,28 @@ def DeleteProduct(request, product_id):
 
 
 def search_products(request):
-    query = krill_lotin_traslate(request.GET.get('q', '')).lower()  
-    category_id = request.GET.get('category', '')
-    print(query)
-    print(query)
-    print(query)
+    # query = krill_lotin_traslate(request.GET.get('q', '')).lower()  
+    # category_id = request.GET.get('category', '')
+    # print(query)
+    # print(query)
+    # print(query)
 
-    products = Product.objects.all()
+    # products = Product.objects.all()
 
-    if query:
-        normalized_query = unidecode(query) 
-        products = products.filter(name__icontains=query) | products.filter(name__icontains=normalized_query)
+    # if query:
+    #     normalized_query = unidecode(query) 
+    #     products = products.filter(name__icontains=query) | products.filter(name__icontains=normalized_query)
 
-    if category_id:
-        products = products.filter(category_id=category_id)
+    # if category_id:
+    #     products = products.filter(category_id=category_id)
 
-    categories = Category.objects.all()  
+    # categories = Category.objects.all()  
 
     return render(request, 'search_result.html', {
-        'products': products,
-        'query': query,
-        'categories': categories,
-        'selected_category': category_id
+        # 'products': products,
+        # 'query': query,
+        # 'categories': categories,
+        # 'selected_category': category_id
     })
 
 

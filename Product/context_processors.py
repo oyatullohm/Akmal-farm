@@ -1,4 +1,4 @@
-from .models import OrderItem
+from .models import OrderItem , Category
 
 
 def cart_context(request):
@@ -15,3 +15,8 @@ def cart_context(request):
         "cart_items": cart_items,
         "cart_total": cart_total,  # Savatning umumiy narxi
     }
+
+
+def category_contex(request):
+     category = Category.objects.all()
+     return{ "category":category}

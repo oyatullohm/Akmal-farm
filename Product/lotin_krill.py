@@ -1,4 +1,7 @@
+from PIL import Image
 import re
+import os
+from Product.models import Product
 
 def krill_lotin_traslate(text):
     if not re.search('[\u0400-\u04FF]', text):
@@ -21,3 +24,5 @@ def krill_lotin_traslate(text):
     }
 
     return ''.join([letters.get(char, char) for char in text])
+
+

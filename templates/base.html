@@ -190,7 +190,12 @@
                                 </h2>
                                 <div class="menu789-katalog-inner1">
                                     <ul>
-                                        <li>
+                                        <li>    
+                                            {% for i in category %}
+                                            <a href="/?{{i.name}}" class="menuo1">{{i.name}}</a>
+                                            {% endfor %}
+                                        </li>
+                                        {% comment %} <li>
                                             <a href="#" class="menuo1">Лекарственные препараты</a>
                                             <ul class="submenu7891">
                                                 <li><a href="#">Антибиотики</a></li>
@@ -291,7 +296,7 @@
                                         <li>
                                             <a href="#" class="menuo1">Акции и скидки</a>
 
-                                        </li>
+                                        </li> {% endcomment %}
                                     </ul>
                                 </div>
                             </div>
@@ -320,7 +325,7 @@
                                 background: #fff;
                                 border: 1px solid #ccc;
                                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                                width: 220px;
+                                width: 350px;
                                 z-index: 1000;
                             }
 
@@ -410,7 +415,7 @@
                                     background: #fff;
                                     border: 1px solid #ccc;
                                     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                                    width: 220px;
+                                    width: 5000px!important;
                                     z-index: 1000;
                                 }
 
@@ -1172,7 +1177,12 @@
                             </h2>
                             <div class="menu789-katalog-inner">
                                 <ul>
-                                    <li>
+                                    <li> 
+                                        {% for i in category %}
+                                        <a href="/?category={{i.name}}" class="menuo1">{{i.name}}</a>
+                                        {% endfor %}
+                                    </li>
+                                    {% comment %} <li>
                                         <a href="#" class="menuo2">Лекарственные препараты</a>
                                         <ul class="submenu789">
                                             <li><a href="#">Антибиотики</a></li>
@@ -1272,7 +1282,7 @@
                                     <li>
                                         <a href="#" class="menuo2">Акции и скидки</a>
 
-                                    </li>
+                                    </li> {% endcomment %}
                                 </ul>
                             </div>
                         </div>
@@ -1391,7 +1401,7 @@
                                     background: #fff;
                                     border: 1px solid #ccc;
                                     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                                    width: 220px;
+                                    width: 500px !important;
                                     z-index: 1000;
                                 }
 

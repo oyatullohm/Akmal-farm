@@ -15,12 +15,12 @@ class Category(models.Model):
 
 class Product(models.Model):
     uid = models.BigIntegerField(db_index=True)
-    category = models.ManyToManyField(Category, related_name="products")
+    # category = models.ManyToManyField(Category, related_name="products")
     name = models.CharField(max_length=255, db_index=True)
-    new_price = models.FloatField(null=True, blank=True)
-    price = models.FloatField()
-    rate = models.FloatField(null=True, blank=True)
-    text = models.TextField()
+    # new_price = models.FloatField(null=True, blank=True)
+    # price = models.FloatField()
+    # rate = models.FloatField(null=True, blank=True)
+    # text = models.TextField()
     image1 = models.ImageField(upload_to="images/", null=True, blank=True)
     image2 = models.ImageField(upload_to="images/", null=True, blank=True)
     image3 = models.ImageField(upload_to="images/", null=True, blank=True)
