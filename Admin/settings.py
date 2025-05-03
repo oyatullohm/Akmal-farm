@@ -171,10 +171,16 @@ LOGGING = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+from pathlib import Path
 
-STATICFILES_DIRS=[BASE_DIR/'static']
-MEDIA_URL = '/media/'
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+
+STATIC_URL = '/static/'  # Static fayllar uchun URL
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Static fayllarni yig'ish uchun joy
+STATICFILES_DIRS = [BASE_DIR / 'static']  # Local static fayllar joyi
+
+MEDIA_URL = '/media/'  # Media fayllar uchun URL
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
