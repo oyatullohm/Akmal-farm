@@ -31,6 +31,27 @@ def cart_view(request):
     return render(request, "cart.html", {"order": order})
     
 def Index(request):
+    # from collections import defaultdict
+    # import random
+
+# # 5 ta tasodifiy Class tanlab, har biridan 20 ta obyekt olish
+    # all_classes = list(set(item.get("Class", "") for item in data if item.get("Class", "")))
+    # selected_classes = random.sample(all_classes, 5)
+
+#     # Class bo‘yicha guruhlash
+#     grouped_data = defaultdict(list)
+
+#     for item in data:
+#         cls = item.get("Class", "")
+#         if cls in selected_classes and len(grouped_data[cls]) < 20:
+#             grouped_data[cls].append(item)
+
+#     # grouped_data => {'Class1': [obj1, obj2, ...], 'Class2': [obj1, obj2, ...], ...}
+
+#     context = {
+#         'grouped_data': grouped_data
+#     }
+
 
     # start_time = time.time()
 #    */5 * * * * cd /path/to/your/project && source venv/bin/activate && celery -A Admin beat --loglevel=info
