@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-%ob5vcdmd^n2c0q1qw7fyg&ii9e6_44n3m6t@&g-$92rja^o^n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -171,15 +171,10 @@ LOGGING = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-from pathlib import Path
+STATIC_URL = 'static/'
 
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-
-STATIC_URL = '/static/'  # Static fayllar uchun URL
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Static fayllarni yig'ish uchun joy
-STATICFILES_DIRS = [BASE_DIR / 'static']  # Local static fayllar joyi
-
-MEDIA_URL = '/media/'  # Media fayllar uchun URL
+STATICFILES_DIRS=[BASE_DIR/'static']
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
