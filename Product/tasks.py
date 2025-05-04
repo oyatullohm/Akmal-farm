@@ -24,10 +24,9 @@ def refresh_products_cache():
         
         result = []
         for item in data:
-            category =  Category.objects.get_or_create(name=item['Class'])
+            # category =  Category.objects.get_or_create(name=item['Class'])
             product = products_dict.get(int(item["UID"]))
-            # logger.info(f"{item}")
-
+    
             if product:
                 result.append({
                     "id": product.id,
@@ -39,8 +38,10 @@ def refresh_products_cache():
                     "MNN": item.get("MNN", ""),
                     "ReleaseForm": item.get("ReleaseForm", ""),
                     "ProductType": item.get("ProductType", ""),
-                    "ExpDate": item.get("ExpDate", ""),  # E'tibor bering: yozishingizda xatolik bor: "ProdExpDateuctType"
-                    "image1": product.image1.url if product.image1 else ""
+                    "ExpDate": item.get("ExpDate", ""),
+                    "image1": product.image1.url if product.image1 else "",
+                    "image2": product.image2.url if product.image2 else "",
+                    "image3": product.image3.url if product.image3 else "",
                 })
 
         r.setex('final_result', 3600*24, json.dumps(result))
