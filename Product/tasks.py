@@ -26,7 +26,7 @@ def refresh_products_cache():
         for item in data:
             # category =  Category.objects.get_or_create(name=item['Class'])
             product = products_dict.get(int(item["UID"]))
-            logger.info(f"{item}")
+            # logger.info(f"{item}")
 
             if product:
                 result.append({
