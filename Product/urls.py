@@ -9,7 +9,7 @@ urlpatterns = [
     path('remove_from_cart/<int:product_id>/', DeleteProduct, name="delete"),
     path('search/', search_products, name='search_products'),
     path('product/detail/<int:pk>/' , product_detail, name='product_detail'),
-    path('product/<int:pk>/' , add_to_cart_detail, name='product_card_detail'),
+    path('product/add/<int:pk>/' , add_to_cart_detail, name='product_card_detail'),
     path('checkout/',checkout_view, name='checkout'),
     path('myaccount/',Myaccount),
     path('wishlist/', wishlist_view, name='wishlist'),

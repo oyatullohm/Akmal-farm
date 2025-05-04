@@ -172,9 +172,9 @@ def product_detail(request,pk):
     return render(request, 'product-details.html',  context )
 
 @login_required(login_url='/auth/send-otp/')
-def add_to_cart_detail(request,product_id):
+def add_to_cart_detail(request,pk):
     quantity = int(request.GET.get('quantity',1))
-    product = get_object_or_404(Product, id=product_id)
+    product = get_object_or_404(Product, id=pk)
     r = redis.Redis(host='localhost', port=6379, db=0)
     result = r.get('final_result') 
     if result:
@@ -182,7 +182,7 @@ def add_to_cart_detail(request,product_id):
     
     
     result_dict = {item['id']: item for item in result}
-    price = result_dict.get(product_id, {}).get('price', 0)
+    price = result_dict.get(pk, {}).get('price', 0)
 
     
     order, created = Order.objects.get_or_create(user=request.user, is_completed=False)
