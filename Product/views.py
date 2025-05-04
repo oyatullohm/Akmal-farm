@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView
+from django.http import JsonResponse
 from django.contrib import messages
 from django.shortcuts import render
 from unidecode import unidecode
@@ -8,10 +8,11 @@ from .models import *
 from .forms import  *
 import redis
 import json
-
+from .context_processors import cart_context
 
 @login_required(login_url='/auth/send-otp/')
 def add_to_cart(request, product_id):
+    
     product = get_object_or_404(Product, id=product_id)
     r = redis.Redis(host='localhost', port=6379, db=0)
     result = r.get('final_result') 
@@ -22,15 +23,24 @@ def add_to_cart(request, product_id):
     result_dict = {item['id']: item for item in result}
     price = result_dict.get(product_id, {}).get('price', 0)
 
+    quantity = int(request.GET.get('quantity',1))
     order, created = Order.objects.get_or_create(user=request.user, is_completed=False)
-    order_item, created = OrderItem.objects.get_or_create(order=order, product=product, price =price)
+    order_item, created = OrderItem.objects.get_or_create(
+                                    order=order,      
+                                    product=product,
+                                    price =price,
+                                    defaults={'quantity': quantity}
+                                    )
 
     if not created:
-        order_item.quantity += 1  
+        order_item.quantity += quantity
         order_item.save()
+    cart =  cart_context(request)
+    cart_count = len(cart['cart_items'])
+    cart_total = cart['cart_total']
     messages.success(request, " mahsulot Savatchaga qo'shildi ")
-
-    return redirect(request.META.get("HTTP_REFERER", "home"))
+    return JsonResponse({"status":200,'cart_count':cart_count, 'cart_total':cart_total})
+    # return redirect(request.META.get("HTTP_REFERER", "home"))
 
 @login_required(login_url='/auth/send-otp/')
 def cart_view(request):
@@ -146,10 +156,21 @@ def search_products(request):
     })
 
 
-class ProductDetailView(DetailView):
-    model = Product
-    template_name = 'product-details.html'
-    context_object_name = 'product'
+def product_detail(request,pk):
+    product = Product.objects.get(id=int(pk))
+    r = redis.Redis(host='localhost', port=6379, db=0)
+    result = r.get('final_result') 
+    if result:
+        result = json.loads(result.decode('utf-8'))
+
+    result_dict = {item['id']: item for item in result}
+    product = result_dict.get(product.id, {})
+
+    context = {
+        "product":product
+    }
+    return render(request, 'product-details.html',  context )
+
 
 
 def checkout_view(request):

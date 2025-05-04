@@ -685,12 +685,12 @@
     <!-- Product Details Section -->
     <div class="product-details">
         <div class="product-gallery">
-            <img id="main-image" src="{{product.image1.url}}" alt="Product Image">
+            <img id="main-image" src="{{product.image1}}" alt="Product Image">
             <div class="thumbnail-gallery">
-                <img src="{{product.image2.url}}" alt="Product Thumbnail" class="thumbnail"
-                    onclick="changeImage('{{product.image2.url}}')">
+                <img src="{{product.image2}}" alt="Product Thumbnail" class="thumbnail"
+                    onclick="changeImage('{{product.image2}}')">
                 <img src="{{product.image3.url}}" alt="Product Thumbnail" class="thumbnail"
-                    onclick="changeImage('{{ product.image3.url }}')">
+                    onclick="changeImage('{{ product.image3 }}')">
 
 
             </div>
@@ -703,11 +703,13 @@
             <p class="price">{{ product.price }} So'm</p>
             {% endif %}
             <p class="description">{{ product.text |truncatechars:120 }}</p>
-            <div class="quantity">
-                <label for="quantity">Quantity:</label>
-                <input type="text" value="1" >
-            </div>
-            <a href="/add_to_cart/{{ product.id }}/"><button class="add-to-cart">Add to Cart</button></a>
+            <form method="GET" action="/add_to_cart/{{ product.id }}/">
+                <div class="quantity">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" name="quantity" value="1" min="1" required>
+                </div>
+                <button type="submit" class="add-to-cart">Add to Cart</button>
+            </form>
         </div>
         <h3>{{ product.name}}</h3>
         <p class="a2">{{ product.text}}</p>

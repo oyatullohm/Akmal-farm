@@ -190,7 +190,7 @@
                         <div class="col-lg-3" style="height: auto;">
                             <div class="single_product">
                                 <div class="product_thumb">
-                                    <a href="product-details.html" style="margin: 0px !important;"><img
+                                    <a href="/product/detail/{{product.id}}" style="margin: 0px !important;"><img
                                             src="{{product.image1}}"   alt=""  style="margin: 0px !important;"></a>
                                     <div class="btn_quickview">
                                         <!-- <a href="product-details.html" data-bs-toggle="modal" data-bs-target="#modal_box" -->
@@ -215,21 +215,26 @@
                                     {% endif %}
 
                                     <div class="product_action">
-                                        <ul style="display: flex; justify-content: center;
-                                        align-items: center;">
+                                        <ul style="display: flex; justify-content: center; align-items: center;">
                                             {% if user.is_authenticated %}
-                                            <li class="product_cart"><a
-                                                    href="/add_to_cart/{{ product.id }}/">корзина </a></li>
-
+                                                <li class="product_cart" style="margin-right: 10px;">
+                                                    <a onclick="addToCart({{ product.id }})">корзина</a>
+                                                </li>
                                             {% else %}
-                                            <li class="product_cart" style="margin-right: 10px;"><a
-                                                    href="/auth/send-otp/">корзина</a></li>
+                                                <li class="product_cart" style="margin-right: 10px;">
+                                                    <a href="/auth/send-otp/">корзина</a>
+                                                </li>
                                             {% endif %}
-                                            <li class="add_links"><a href="/toggle/{{ product.id }}/"
-                                                    title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                            <li class="add_links">
+                                                <a href="/toggle/{{ product.id }}/" title="Add to Wishlist">
+                                                    <i class="ion-ios-heart-outline"></i>
+                                                </a>
                                             </li>
-                                            <li class="add_links"><a href="/productdetail/{{ product.id }}/"
-                                                    title="Add to Wishlist"><i class="ion-ios-eye"></i></a></li>
+                                            <li class="add_links">
+                                                <a href="/productdetail/{{ product.id }}/" title="Add to Wishlist">
+                                                    <i class="ion-ios-eye"></i>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
 
@@ -1183,5 +1188,29 @@
         }
     }
 </style>
+
+
+<script>
+    function addToCart(productId) {
+        fetch(`/add_to_cart/${productId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("cart_items_fetch").innerText = data.cart_count;
+            document.getElementById("cart_total_id").innerText = data.cart_total;
+
+        })
+        .catch(error => {
+           // console.error("Xatolik yuz berdi:", error);
+        });
+    }
+    </script>
+
 <!-- reklama tugatilid -->
 {% endblock content %}

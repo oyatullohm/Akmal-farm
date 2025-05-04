@@ -1718,7 +1718,7 @@
                             <!--mini cart-->
                             <div class="mini_cart3">
                                 <div class="items_nunber">
-                                    <span>{{ cart_items|length }} Items in Cart</span>
+                                    <span>{{ cart_items|length }}Items in Cart</span>
                                 </div>
                                 {% for items in cart_items %}
                                 <div class="cart_item3">
@@ -1741,9 +1741,9 @@
                                     </div>
                                 </div>
                                 {% endfor %}
-                                <p><strong>Dori Narxi: {{ cart_total }} So'm</strong></p>
+                                <p><strong id="cart_total_id">Dori Narxi: {{ cart_total }} So'm</strong></p>
                                 <p><strong>Yetkazib berish Narx: 15000 So'm</strong></p>
-                                <p><strong>Umumiy Narxi: {{ cart_total |add:15000}} So'm</strong></p>
+                                <p><strong >Umumiy Narxi: {{ cart_total |add:15000}} So'm</strong></p>
 
 
 
