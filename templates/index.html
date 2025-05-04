@@ -199,10 +199,10 @@
                                 </div>
                                 <div class="product_content">
                                     <h3><a href="product-details.html">{{ product.name }} </a></h3>
-                                    {% if product.new_price > 0 %}
+                                    {% if product.price > 0 %}
                                     <div class="product_price">
                                         <span class="current_price"
-                                            style="color: grey;font-size: 15px;"><s>{{product.Price}}
+                                            style="color: grey;font-size: 15px;"><s>{{product.price}}
                                                 so'm</s></span><br>
                                         <span class="current_price">{{ product.price}} so'm</span>
                                     </div>
