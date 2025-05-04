@@ -23,17 +23,17 @@ def add_to_cart(request, product_id):
     result_dict = {item['id']: item for item in result}
     price = result_dict.get(product_id, {}).get('price', 0)
 
-    quantity = int(request.GET.get('quantity',1))
+    
     order, created = Order.objects.get_or_create(user=request.user, is_completed=False)
     order_item, created = OrderItem.objects.get_or_create(
                                     order=order,      
                                     product=product,
                                     price =price,
-                                    defaults={'quantity': quantity}
+                                   
                                     )
 
     if not created:
-        order_item.quantity += quantity
+        order_item.quantity += 1
         order_item.save()
     cart =  cart_context(request)
     cart_count = len(cart['cart_items'])
@@ -172,6 +172,32 @@ def product_detail(request,pk):
     return render(request, 'product-details.html',  context )
 
 
+
+def add_to_cart_detail(request,product_id):
+    quantity = int(request.GET.get('quantity',1))
+    product = get_object_or_404(Product, id=product_id)
+    r = redis.Redis(host='localhost', port=6379, db=0)
+    result = r.get('final_result') 
+    if result:
+        result = json.loads(result.decode('utf-8'))
+    
+    
+    result_dict = {item['id']: item for item in result}
+    price = result_dict.get(product_id, {}).get('price', 0)
+
+    
+    order, created = Order.objects.get_or_create(user=request.user, is_completed=False)
+    order_item, created = OrderItem.objects.get_or_create(
+                                    order=order,      
+                                    product=product,
+                                    price =price,
+                                    defaults={quantity:quantity}
+                                    )
+
+    if not created:
+        order_item.quantity += quantity
+        order_item.save()
+    return redirect(f'/product/detail/{product_id}')
 
 def checkout_view(request):
     if request.method == "POST":
