@@ -196,7 +196,7 @@ def add_to_cart_detail(request,pk):
     if not created:
         order_item.quantity += quantity
         order_item.save()
-    return redirect(f'/product/detail/{product_id}')
+    return redirect(f'/product/detail/{pk}')
 
 def checkout_view(request):
     if request.method == "POST":
