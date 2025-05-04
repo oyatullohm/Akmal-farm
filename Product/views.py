@@ -171,8 +171,7 @@ def product_detail(request,pk):
     }
     return render(request, 'product-details.html',  context )
 
-
-
+@login_required(login_url='/auth/send-otp/')
 def add_to_cart_detail(request,product_id):
     quantity = int(request.GET.get('quantity',1))
     product = get_object_or_404(Product, id=product_id)
