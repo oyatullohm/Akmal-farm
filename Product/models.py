@@ -77,7 +77,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-
+    prce = models.PositiveIntegerField(0)
 
     def __str__(self):
         return f"Buyurtma {self.product.name} {self.id} - {self.order} - {self.quantity}"
@@ -86,12 +86,9 @@ class OrderItem(models.Model):
 
     @property
     def total_price(self):
-        if self.product.price > 0:
-            return self.product.price * self.quantity
-        else:
-            return self.product.price * self.quantity
-
-
+        
+        return self.price * self.quantity
+       
 class Wishlist(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
