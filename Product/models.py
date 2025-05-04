@@ -86,8 +86,8 @@ class OrderItem(models.Model):
 
     @property
     def total_price(self):
-        if self.product.new_price > 0:
-            return self.product.new_price * self.quantity
+        if self.product.price > 0:
+            return self.product.price * self.quantity
         else:
             return self.product.price * self.quantity
 

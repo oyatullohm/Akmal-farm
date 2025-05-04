@@ -49,8 +49,8 @@
                                                    <td class="product_remove"><a href="#">X</a></td>
                                                     <td class="product_thumb"><a href="#"><img src="{{i.product.image1.url}}" alt=""></a></td>
                                                     <td class="product_name"><a href="#">{{ i.product.name}}</a></td>
-                                                    {% if i.product.new_price > 0 %}
-                                                    <td class="product-price">{{ i.product.new_price }}</td>
+                                                    {% if i.product.price > 0 %}
+                                                    <td class="product-price">{{ i.product.price }}</td>
                                                     {% else %}
                                                     <td class="product-price">{{ i.product.price }}</td>
                                                     {% endif %}

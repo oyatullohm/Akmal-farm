@@ -619,8 +619,8 @@
                                             <a href="#">{{ items.product.name}}</a>
                                             <form action="#">
                                                 <input min="0" max="100" type="number">
-                                                {% if items.product.new_price > 0 %}
-                                                <span>{{items.product.new_price}}</span>
+                                                {% if items.product.price > 0 %}
+                                                <span>{{items.product.price}}</span>
                                                 {% else %}
                                                 <span>{{items.product.price}}</span>
                                                 {% endif %}
@@ -697,8 +697,8 @@
         </div>
         <div class="product-info">
             <h1>{{ product.name}}</h1>
-            {% if product.new_price > 0 %}
-            <p class="price">{{ product.new_price }} So'm</p>
+            {% if product.price > 0 %}
+            <p class="price">{{ product.price }} So'm</p>
             {% else%}
             <p class="price">{{ product.price }} So'm</p>
             {% endif %}
