@@ -190,12 +190,7 @@
                                 </h2>
                                 <div class="menu789-katalog-inner1">
                                     <ul>
-                                        <li>    
-                                            {% for i in category %}
-                                            <a href="/?{{i.name}}" class="menuo1">{{i.name}}</a>
-                                            {% endfor %}
-                                        </li>
-                                        {% comment %} <li>
+                                        <li>
                                             <a href="#" class="menuo1">Лекарственные препараты</a>
                                             <ul class="submenu7891">
                                                 <li><a href="#">Антибиотики</a></li>
@@ -296,7 +291,7 @@
                                         <li>
                                             <a href="#" class="menuo1">Акции и скидки</a>
 
-                                        </li> {% endcomment %}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -1177,12 +1172,7 @@
                             </h2>
                             <div class="menu789-katalog-inner">
                                 <ul>
-                                    <li> 
-                                        {% for i in category %}
-                                        <a href="/?category={{i.name}}" class="menuo1">{{i.name}}</a>
-                                        {% endfor %}
-                                    </li>
-                                    {% comment %} <li>
+                                    <li>
                                         <a href="#" class="menuo2">Лекарственные препараты</a>
                                         <ul class="submenu789">
                                             <li><a href="#">Антибиотики</a></li>
@@ -1282,7 +1272,7 @@
                                     <li>
                                         <a href="#" class="menuo2">Акции и скидки</a>
 
-                                    </li> {% endcomment %}
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -1724,7 +1714,7 @@
                             <a href="javascript:void(0)" style="color: black !important; font-weight: 400; "><i
                                     class="ion-ios-cart"></i><br>
                                 Корзина</a>
-                            <span class="cart_count">{{ cart_items|length }}</span>
+                            <span class="cart_count" id="cart_items_fetch">{{ cart_items|length }} </span>
                             <!--mini cart-->
                             <div class="mini_cart3">
                                 <div class="items_nunber">

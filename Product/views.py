@@ -13,10 +13,17 @@ import json
 @login_required(login_url='/auth/send-otp/')
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    print(request.user)
-   
+    r = redis.Redis(host='localhost', port=6379, db=0)
+    result = r.get('final_result') 
+    if result:
+        result = json.loads(result.decode('utf-8'))
+    
+    
+    result_dict = {item['id']: item for item in result}
+    price = result_dict.get(product_id, {}).get('price', 0)
+
     order, created = Order.objects.get_or_create(user=request.user, is_completed=False)
-    order_item, created = OrderItem.objects.get_or_create(order=order, product=product)
+    order_item, created = OrderItem.objects.get_or_create(order=order, product=product, price =price)
 
     if not created:
         order_item.quantity += 1  

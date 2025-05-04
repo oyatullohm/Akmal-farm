@@ -10,7 +10,6 @@ def cart_context(request):
 
         # Endi `total_price_per_item` ni ishlatish shart emas, chunki modelning `total_price` propertysi bor
         cart_total = sum(item.total_price for item in cart_items)
-
     return {
         "cart_items": cart_items,
         "cart_total": cart_total,  # Savatning umumiy narxi

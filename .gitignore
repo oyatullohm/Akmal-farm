@@ -87,6 +87,6 @@ local_settings.py
 
 .env
 .venv
-
+db.sqlite3
 
 https://github.com/YMirodilbek/qwe.git
