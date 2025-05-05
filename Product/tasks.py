@@ -38,10 +38,11 @@ def refresh_products_cache():
                 continue
 
             product = products_dict.get(uid)
-            if product:
+            if product:      
                 result.append({
                     "id": product.id,
                     "name": item.get("Name", ""),
+                    'name_lover':item.get("Name").lower(),
                     "price": item.get("Price", 0),
                     "class": item.get("Class", ""),
                     "producer": item.get("Producer", ""),

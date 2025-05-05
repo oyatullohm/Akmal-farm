@@ -10,3 +10,33 @@
 #     data = response.json().get('array', [])
 
 # print(data)
+
+
+# cd /etc/supervisor/conf.d/
+# sudo nano celery_admin.conf
+
+
+# [program:celery_worker]
+# command=/home/ubuntu/env/bin/celery -A Admin worker --loglevel=info
+# directory=/home/ubuntu/
+# user=ubuntu
+# autostart=true
+# autorestart=true
+# stderr_logfile=/var/log/celery_worker.err.log
+# stdout_logfile=/var/log/celery_worker.out.log
+
+# [program:celery_beat]
+# command=/home/ubuntu/env/bin/celery -A Admin beat --loglevel=info
+# directory=/home/ubuntu
+# user=ubuntu
+# autostart=true
+# autorestart=true
+# stderr_logfile=/var/log/celery_beat.err.log
+# stdout_logfile=/var/log/celery_beat.out.log
+
+
+# sudo supervisorctl reread
+# sudo supervisorctl update
+# sudo supervisorctl restart celery_worker
+# sudo supervisorctl restart celery_beat
+# sudo supervisorctl status

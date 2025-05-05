@@ -8,7 +8,6 @@ from .models import *
 from .forms import  *
 import redis
 import json
-from .context_processors import cart_context
 
 
 
@@ -18,34 +17,7 @@ def cart_view(request):
     return render(request, "cart.html", {"order": order})
     
 def Index(request):
-    # from collections import defaultdict
-    # import random
 
-# # 5 ta tasodifiy Class tanlab, har biridan 20 ta obyekt olish
-    # all_classes = list(set(item.get("Class", "") for item in data if item.get("Class", "")))
-    # selected_classes = random.sample(all_classes, 5)
-
-#     # Class bo‘yicha guruhlash
-#     grouped_data = defaultdict(list)
-
-#     for item in data:
-#         cls = item.get("Class", "")
-#         if cls in selected_classes and len(grouped_data[cls]) < 20:
-#             grouped_data[cls].append(item)
-
-#     # grouped_data => {'Class1': [obj1, obj2, ...], 'Class2': [obj1, obj2, ...], ...}
-
-#     context = {
-#         'grouped_data': grouped_data
-#     }
-
-
-    # start_time = time.time()
-#    */5 * * * * cd /path/to/your/project && source venv/bin/activate && celery -A Admin beat --loglevel=info
-
-    # end_time = time.time()
-    # elapsed_time = end_time - start_time  
-    # print(f"Ma'lumot {elapsed_time:.2f} sekundda keldi")
     r = redis.Redis(host='localhost', port=6379, db=0)
     result = r.get('final_result') 
     if result:
@@ -129,7 +101,10 @@ def add_to_cart_detail(request,pk):
     price = result_dict.get(pk, {}).get('price', 0)
     name = result_dict.get(pk, {}).get('name', '')
 
-    
+    print(name)
+    print(name)
+    print(name)
+    print(name)
     order, created = Order.objects.get_or_create(user=request.user, is_completed=False)
     order_item, created = OrderItem.objects.get_or_create(
                                     order=order,      
