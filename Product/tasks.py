@@ -56,9 +56,9 @@ def refresh_products_cache():
                     "image3": product.image3.url if product.image3 else "",
                 })
 
-            r.setex('final_result', 3600*24, json.dumps(result))
-            print("Redis cache updated successfully!")
+        r.setex('final_result', 3600*24, json.dumps(result))
+        # print("Redis cache updated successfully!")
             # print(result)
-            logger.info(f"Redis cache updated successfully! {datetime.datetime.now()}")
+        logger.info(f"Redis cache updated successfully! {datetime.datetime.now()}")
     else:
         logger.error(f"Failed to refresh product data! Status code: {response.status_code}")
