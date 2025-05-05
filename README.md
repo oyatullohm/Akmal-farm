@@ -9,4 +9,6 @@ requirments.txt  o'rnatamiz
 data.py fileda   objectlar bor  shundan korib admin paneldan  product create qilamiz uid va name foto  bir biriga mos Bo'lishiga etibor berin 
 
 
+pip install rapidfuzz
+
 

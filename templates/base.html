@@ -1461,8 +1461,8 @@
 
 
                         <!-- Search input start -->
-                        <form action="/search/" method="GET" class="search789-form">
-                            <input placeholder="Поиск: " type="text" name="q" value="{{query}}">
+                        <form  class="search789-form">
+                            <input id="search_query" placeholder="Поиск: " type="text" name="q">
                         </form>
                         <!-- search input end -->
 
@@ -1726,12 +1726,12 @@
                                         <a href="#"><img src="{{items.product.image1.url}}" alt=""></a>
                                     </div>
                                     <div class="cart_info342">
-                                        <a href="#">{{ items.product.name}}</a>
+                                        <p> {{ items.product.name}} </p>
                                         <p>soni: {{ items.quantity }} dona</p>
-                                        {% if items.product.price > 0 %}
-                                        <p>narxi: {{ items.product.price }} So'm</p>
+                                        {% if items.price > 0 %}
+                                        <p>narxi: {{ items.price }} So'm</p>
                                         {% else %}
-                                        <p>narxi: {{ items.product.price }} So'm</p>
+                                        <p>narxi: {{ items.price }} So'm</p>
                                         {% endif %}
                                         <p><strong>Umumiy: {{ items.total_price }} So'm</strong></p>
                                         <form action="#">

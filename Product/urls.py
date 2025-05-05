@@ -1,12 +1,15 @@
+from .ajax import add_to_cart,  search_products
 from django.urls import path
 from .views import *
+
+
 urlpatterns = [
     path('',Index),
     path("add_to_cart/<int:product_id>/", add_to_cart, name="add_to_cart"),
     path('cart/',cart_view, name="cart"),
     path("increase-quantity/<int:item_id>/", increase_quantity, name="increase_quantity"),
     path("decrease-quantity/<int:item_id>/", decrease_quantity, name="decrease_quantity"),
-    path('remove_from_cart/<int:product_id>/', DeleteProduct, name="delete"),
+    path('remove_from_cart/<int:item_id>/', DeleteProduct, name="delete"),
     path('search/', search_products, name='search_products'),
     path('product/detail/<int:pk>/' , product_detail, name='product_detail'),
     path('product/add/<int:pk>/' , add_to_cart_detail, name='product_card_detail'),

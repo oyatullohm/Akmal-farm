@@ -1197,6 +1197,23 @@
 
 
 <script>
+    document.getElementById("search_query").addEventListener("keyup", function() {
+        let query = this.value;
+        if (query.length >= 5) {
+            fetch(`/search/?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                 
+
+                })
+                .catch(error => console.error("Xatolik:", error));
+        }
+    });
+    
+
+
+
+
     function addToCart(productId) {
         fetch(`/add_to_cart/${productId}/`, {
             method: 'POST',

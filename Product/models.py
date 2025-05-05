@@ -46,8 +46,8 @@ class Order(models.Model):
         ('card', 'Karta'),
     )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
-    filial = models.ForeignKey(Filial, on_delete=models.SET_NULL, null=True, blank=True, related_name="orders")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="users")
+    filial = models.ForeignKey(Filial, on_delete=models.SET_NULL, null=True, blank=True, related_name="finals")
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS, default='cash')
     # Google Maps orqali yoki qo'lda kiritiladigan manzil
     address_text = models.CharField(max_length=255, blank=True, null=True)  # Qo'lda kiritish

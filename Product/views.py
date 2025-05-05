@@ -10,37 +10,7 @@ import redis
 import json
 from .context_processors import cart_context
 
-@login_required(login_url='/auth/send-otp/')
-def add_to_cart(request, product_id):
-    
-    product = get_object_or_404(Product, id=product_id)
-    r = redis.Redis(host='localhost', port=6379, db=0)
-    result = r.get('final_result') 
-    if result:
-        result = json.loads(result.decode('utf-8'))
-    
-    
-    result_dict = {item['id']: item for item in result}
-    price = result_dict.get(product_id, {}).get('price', 0)
 
-    
-    order, created = Order.objects.get_or_create(user=request.user, is_completed=False)
-    order_item, created = OrderItem.objects.get_or_create(
-                                    order=order,      
-                                    product=product,
-                                    price =price,
-                                   
-                                    )
-
-    if not created:
-        order_item.quantity += 1
-        order_item.save()
-    cart =  cart_context(request)
-    cart_count = len(cart['cart_items'])
-    cart_total = cart['cart_total']
-    messages.success(request, " mahsulot Savatchaga qo'shildi ")
-    return JsonResponse({"status":200,'cart_count':cart_count, 'cart_total':cart_total})
-    # return redirect(request.META.get("HTTP_REFERER", "home"))
 
 @login_required(login_url='/auth/send-otp/')
 def cart_view(request):
@@ -120,40 +90,14 @@ def decrease_quantity(request, item_id):
     return redirect("cart")
 
 @login_required(login_url='/auth/send-otp/')
-def DeleteProduct(request, product_id):
+def DeleteProduct(request, item_id):
     """ Savatdan bitta mahsulot turini butunlay o‘chirish """
-    order = Order.objects.filter(user=request.user, is_completed=False).first()
-    if order:
-        order_item = OrderItem.objects.filter(order=order, product_id=product_id).first()
-        if order_item:
-            order_item.delete()
+    # order = Order.objects.filter(user=request.user, is_completed=False)
+    order_item = OrderItem.objects.get( id=item_id)
+    if order_item:
+        order_item.delete()
     return redirect("cart")  
 
-
-def search_products(request):
-    # query = krill_lotin_traslate(request.GET.get('q', '')).lower()  
-    # category_id = request.GET.get('category', '')
-    # print(query)
-    # print(query)
-    # print(query)
-
-    # products = Product.objects.all()
-
-    # if query:
-    #     normalized_query = unidecode(query) 
-    #     products = products.filter(name__icontains=query) | products.filter(name__icontains=normalized_query)
-
-    # if category_id:
-    #     products = products.filter(category_id=category_id)
-
-    # categories = Category.objects.all()  
-
-    return render(request, 'search_result.html', {
-        # 'products': products,
-        # 'query': query,
-        # 'categories': categories,
-        # 'selected_category': category_id
-    })
 
 
 def product_detail(request,pk):
