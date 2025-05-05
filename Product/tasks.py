@@ -39,6 +39,7 @@ def refresh_products_cache():
                     "ReleaseForm": item.get("ReleaseForm", ""),
                     "ProductType": item.get("ProductType", ""),
                     "ExpDate": item.get("ExpDate", ""),
+                    "info":product.info,
                     "image1": product.image1.url if product.image1 else "",
                     "image2": product.image2.url if product.image2 else "",
                     "image3": product.image3.url if product.image3 else "",

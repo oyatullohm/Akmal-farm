@@ -127,6 +127,7 @@ def add_to_cart_detail(request,pk):
     
     result_dict = {item['id']: item for item in result}
     price = result_dict.get(pk, {}).get('price', 0)
+    name = result_dict.get(pk, {}).get('name', '')
 
     
     order, created = Order.objects.get_or_create(user=request.user, is_completed=False)
@@ -134,6 +135,7 @@ def add_to_cart_detail(request,pk):
                                     order=order,      
                                     product=product,
                                     price =price,
+                                    name = name,
                                     defaults={quantity:quantity}
                                     )
 
@@ -224,8 +226,8 @@ def checkout_view(request):
             order.save()
 
            
-            for item in cart_items:
-                OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity)
+            # for item in cart_items:
+            #     OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity)
 
             request.user.cart.items.all().delete()
             

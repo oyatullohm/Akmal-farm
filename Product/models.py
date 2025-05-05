@@ -16,7 +16,7 @@ class Category(models.Model):
 class Product(models.Model):
     uid = models.BigIntegerField(db_index=True)
     # category = models.ManyToManyField(Category, related_name="products")
-    name = models.CharField(max_length=255, db_index=True)
+    info = models.TextField(default='', blank=True)
     # new_price = models.FloatField(null=True, blank=True)
     # price = models.FloatField()
     # rate = models.FloatField(null=True, blank=True)
@@ -29,7 +29,7 @@ class Product(models.Model):
 
 
     def __str__(self):
-        return self.name
+        return str(self.uid)
 
 
 
@@ -78,9 +78,10 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     price = models.PositiveIntegerField(default = 0)
+    name = models.CharField(max_length=255,default='')
 
     def __str__(self):
-        return f"Buyurtma {self.product.name} {self.id} - {self.order} - {self.quantity}"
+        return f"Buyurtma {self.product.uid} {self.id} - {self.order} - {self.quantity}"
 
 
 
@@ -98,7 +99,7 @@ class Wishlist(models.Model):
         unique_together = ('user', 'product')  
 
     def __str__(self):
-        return f"{self.user.first_name} - {self.product.name}"
+        return f"{self.user.first_name} - {self.product.uid}"
 
 
 class Aloqa(models.Model):
