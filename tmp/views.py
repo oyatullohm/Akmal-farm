@@ -13,3 +13,7 @@ def Vacancy(request):
 
 def Pharm(request):
     return render(request,'new/farmaset.html')
+
+
+def About(request):
+    return render(request,'new/onas.html')
