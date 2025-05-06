@@ -3,12 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib import messages
 from django.shortcuts import render
+from .lotin_krill import compress
 from unidecode import unidecode
 from .models import *
 from .forms import  *
 import redis
 import json
-
 
 
 @login_required(login_url='/auth/send-otp/')
@@ -31,6 +31,22 @@ def Index(request):
         
     category = request.GET.get('category')
     print(category)
+    f = r.get('products_by_class')
+    f =  json.loads(f.decode('utf-8'))
+
+
+    
+    for k , v in f.items():
+        print(k )
+        print()    
+        print()    
+        print()    
+        print()
+        for i in v:
+            print()    
+            print()    
+            print()
+            print(i)    
     if category:
         result = r.get('products_by_class') 
         if result:
@@ -39,7 +55,6 @@ def Index(request):
         else:
             result = []  
 
-    print (result)
     context = {
         "data":result
     }
@@ -220,3 +235,35 @@ def checkout_view(request):
         form = CheckoutForm()
     
     return render(request, 'checkout.html', {'form': form, 'cart_items': cart_items})
+
+def product_create(request):
+    if request.user.is_staff:
+        if request.method == 'POST':
+            uid = request.POST.get('uid')
+            info = request.POST.get('info')
+            img_1 = request.FILES.get('img_1')
+            img_2 = request.FILES.get('img_2')
+            img_3 = request.FILES.get('img_3')
+            product =  Product.objects.create(
+                uid = int(uid),
+                info = info
+            )
+            if img_1:
+                img_1 = compress(img_1)
+                product.image1 = img_1
+
+            if img_2:
+                img_2 = compress(img_2)
+                product.image2 = img_2
+
+            if img_3:
+                img_3 = compress(img_3)
+                product.image3 = img_3
+            product.save()
+            if product:
+                messages.success(request, "Product q'shildi")
+            else:
+                messages.error(request, "Product yeratib bo'lmado")
+        return render(request,'product-create.html')
+    return redirect('/')
+    
