@@ -30,9 +30,16 @@ def Index(request):
         result = result[start:end] 
         
     category = request.GET.get('category')
+    print(category)
     if category:
-        result = [item for item in result if item.get('class') == category]
-        
+        result = r.get('products_by_class') 
+        if result:
+            result = json.loads(result.decode('utf-8'))
+            result = result.get(category, [])
+        else:
+            result = []  
+
+    print (result)
     context = {
         "data":result
     }

@@ -190,7 +190,10 @@
                                 </h2>
                                 <div class="menu789-katalog-inner1">
                                     <ul>
-                                        <li>
+                                        {% for i in category %}
+                                        <li><a href="#">{{i.name}}</a></li>
+                                        {% endfor %}
+                                        {% comment %} <li>
                                             <a href="#" class="menuo1">Лекарственные препараты</a>
                                             <ul class="submenu7891">
                                                 <li><a href="#">Антибиотики</a></li>
@@ -291,7 +294,7 @@
                                         <li>
                                             <a href="#" class="menuo1">Акции и скидки</a>
 
-                                        </li>
+                                        </li> {% endcomment %}
                                     </ul>
                                 </div>
                             </div>
@@ -1172,7 +1175,10 @@
                             </h2>
                             <div class="menu789-katalog-inner">
                                 <ul>
-                                    <li>
+                                    {% for i in category %}
+                                        <li><a href="?category={{i.name}}">{{i.name}}</a></li>
+                                    {% endfor %}
+                                    {% comment %} <li>
                                         <a href="#" class="menuo2">Лекарственные препараты</a>
                                         <ul class="submenu789">
                                             <li><a href="#">Антибиотики</a></li>
@@ -1272,7 +1278,7 @@
                                     <li>
                                         <a href="#" class="menuo2">Акции и скидки</a>
 
-                                    </li>
+                                    </li> {% endcomment %}
                                 </ul>
                             </div>
                         </div>
