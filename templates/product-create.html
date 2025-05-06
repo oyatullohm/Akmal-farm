@@ -33,15 +33,15 @@
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">UID</label>
-                                <input type="number" name="uid" class="form-control" id="exampleFormControlInput1">
+                                <input type="number" name="uid" class="form-control" id="exampleFormControlInput1" required>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Info</label>
-                                <textarea class="form-control" name="info" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <textarea class="form-control" name="info" id="exampleFormControlTextarea1" rows="3" required></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="formFile" class="form-label">Images-1</label>
-                                <input class="form-control" name="img_1" type="file" id="formFile">
+                                <label for="formFile" class="form-label" >Images-1</label>
+                                <input class="form-control" name="img_1" type="file" id="formFile" required>
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Images-2</label>
